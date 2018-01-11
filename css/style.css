@@ -1,7 +1,7 @@
 .pane-body{
     padding: 1rem
 }
-#modal_cliente{
+#modal_cliente, #modal_produto{
     position: fixed;
     width: 100%;
     min-height: 100%;
@@ -11,7 +11,7 @@
     color: rgb(255, 255, 255);
     z-index: 9000;
 }
-#modal_cliente .wrap{
+#modal_cliente, #modal_produto .wrap{
     width: 60%;
     height: 50%;
     margin-left: 20%;
@@ -19,6 +19,6 @@
     background: rgba(165, 165, 165, 0.7);
     border-radius: 3%;
 }
-#modal_cliente input{
+#modal_cliente, #modal_produto input{
     color:  rgb(0, 0, 0);
 }

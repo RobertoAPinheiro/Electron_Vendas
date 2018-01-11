@@ -9,11 +9,185 @@
 </head>
 
 <body>
-    <p>Hi!</p>
+    <div class="window">
+        <header class="toolbar toolbar-header">
+            <h1 class="title">Loja XYZ</h1>
+            <div class="toolbar-actions" id="groupBtn">
+                <div class="btn-group">
+                    <button class="btn btn-default">
+                        <span class="icon icon-home"></span>
+                    </button>
+                    <button class="btn btn-default">
+                        <span class="icon icon-folder"></span>
+                    </button>
+                    <button class="btn btn-default active">
+                        <span class="icon icon-cloud"></span>
+                    </button>
+                    <button class="btn btn-default">
+                        <span class="icon icon-popup"></span>
+                    </button>
+                    <button class="btn btn-default">
+                        <span class="icon icon-shuffle"></span>
+                    </button>
+                </div>
+
+                <a class="btn btn-default" href="index.html">
+                    Clientes
+                    <span class="icon icon-user icon-text"></span>
+                </a>
+
+                <button class="btn btn-default btn-default" @click="createProduct()" style="position: absolute;right:0">
+                    Cadastrar Produto
+                    <span class="icon icon-plus icon-text"></span>
+                </button>
+            </div>
+        </header>
+        <div class="window-content">
+            <div class="pane-group">
+                <div class="pane-sm sidebar">
+                    <p>Fez exprimindo recordarei dei has inventario dez necessitas. Desdemnao caminhava desgostei ha ja. Afoito
+                        chapeo diz teu aturar ameaca. Sao acompanhar com reproduzir declamacao obtemperou bem vivissimos
+                        tao. Ao joao vejo maco va haja faca um. Da tu as eivado pensou vereda.</p>
+                </div>
+                <div class="pane">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nome</th>
+                                <th>Preço</th>
+                                <th>Qtd</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="produto in produtos">
+                                <td>{{produto.cod}}</td>
+                                <td>{{produto.nome}}</td>
+                                <td>{{produto.preco}}</td>
+                                <td>{{produto.qtd}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" @click="editProduto(produto)">
+                                        Editar
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <footer class="toolbar toolbar-footer">
+            <h1 class="title">Desenvolvido por Roberto Pinheiro</h1>
+        </footer>
+    </div>
+    <!--PARA APARECER A JANELA DESTACADA-->
+    <div id="modal_produto" v-if="openModal">
+        <div class="wrap">
+            <!--MODELO DE FORMULARIO PRODUTO-->
+            <form id='formsCadastroProduto' action="" class="pane-body">
+                <h3 v-if="mode === 'cadastro'">
+                    Cadastro de Produto
+                </h3>
+                <h3 v-if="mode === 'edicao'">   
+                    Edição de Produto
+                </h3>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Código" id="inpuCod" v-model="list_product.product.cod" />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Nome" id="inputName" v-model="list_product.product.nome" />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Preço" id="inputPreco" v-model="list_product.product.preco" />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Quantidade" id="inputQtd" v-model="list_product.product.qtd"
+                    />
+                </div>
+                <button type="button" class="btn btn-large btn-negative" id="btnCancelar" @click="modal_2.openModal = false">Cancelar</button>
+                <button type="button" class="btn btn-large btn-positive" id="btnSalvar" @click="productStoreOrUpdate()">Salvar</button>
+            </form>
+        </div>
+    </div>
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script>
+    var read = require('read-file-utf8')
+    var loki = require('lokijs');
+    var db = new loki('db.json');
+    var data = read(__dirname + '/db.json');
+    db.loadJSON(data);
+    window.vue = require('vue');
+    // db.loadJSON()
+    var produtos = db.getCollection('produtos');
+    console.log(db);
 
+    //CONTROLA BOTÕES NO HEAD
+    var btnGroup = new Vue({
+        el: '#groupBtn',
+        data: {
+        },
+        methods: {
+            //CADASTRAR produto
+            createProduct: function () {
+                modal_2.mode = 'cadastro';
+                modal_2.openModal = true;
+                //LIMPAR OS DADOS DO IMPUTS
+                list_product.product = {
+                    cod: '',
+                    nome: '',
+                    preco: '',
+                    qtd: ''
+                }
+            }
+        }
+    })
+    //CONTROLA MODAL
+    var modal_2 = new Vue({
+        el: '#modal_produto',
+        data: {
+            openModal: false,
+            mode: ''
+        },
+        methods: {
+            productStoreOrUpdate: function () {
+                if (typeof list_product.product.$loki != 'undefinede') {
+                    produtos.update(list_product.product);
+                    alert('Alterado!');
+                } else {
+                    produtos.insert(list_product.product);
+                    alert('Salvo!');
+                }
+                db.save();
+                this.openModal = false;
+            }
+        }
+    })
+    //CONTROLA A LISTA DE USUÁRIOS
+    var list_product = new Vue({
+        el: 'tbody',
+        data: {
+            produtos: [],
+            product: {
+                cod: '',
+                nome: '',
+                preco: '',
+                qtd: ''
+            }
+        },
+        mounted: function () {
+            this.produtos = produtos.data;
+            console.log(this.produtos);
+        },  
+        methods: {
+            //EDITAR PRODUTO
+            editProduto: function (product) {
+                //alert('TESTE');
+                modal_2.mode = 'edicao';
+                modal_2.openModal = true;
+                this.product = product;
+            }
+        }
+    })
 </script>
-
-</html>
