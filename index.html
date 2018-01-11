@@ -1,19 +1,189 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
 
-    <script>
-      // You can also require other files to run in this process
-      require('./renderer.js')
-    </script>
-  </body>
+<head>
+  <title>Controle de vendas</title>
+  <meta charset="utf-8" />
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/photon.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <div class="window">
+    <header class="toolbar toolbar-header">
+      <h1 class="title">Loja XYZ</h1>
+      <div class="toolbar-actions" id="groupBtn">
+        <div class="btn-group">
+          <button class="btn btn-default">
+            <span class="icon icon-home"></span>
+          </button>
+          <button class="btn btn-default">
+            <span class="icon icon-folder"></span>
+          </button>
+          <button class="btn btn-default active">
+            <span class="icon icon-cloud"></span>
+          </button>
+          <button class="btn btn-default">
+            <span class="icon icon-popup"></span>
+          </button>
+          <button class="btn btn-default">
+            <span class="icon icon-shuffle"></span>
+          </button>
+        </div>
+
+        <a class="btn btn-default" href="produtos.html">
+          Produtos
+          <span class="icon icon-dropbox icon-text"></span>
+        </a>
+
+        <button class="btn btn-default btn-default" @click="createClient()" style="position: absolute;right:0">
+          Cadastrar Cliente
+          <span class="icon icon-user icon-text"></span>
+        </button>
+      </div>
+    </header>
+    <div class="window-content">
+      <div class="pane-group">
+        <div class="pane-sm sidebar">
+          <p>Fez exprimindo recordarei dei has inventario dez necessitas. Desdemnao caminhava desgostei ha ja. Afoito chapeo
+            diz teu aturar ameaca. Sao acompanhar com reproduzir declamacao obtemperou bem vivissimos tao. Ao joao vejo maco
+            va haja faca um. Da tu as eivado pensou vereda.</p>
+        </div>
+        <div class="pane">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Telefone</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="cliente in clientes">
+                <td>{{cliente.nome}}</td>
+                <td>{{cliente.cpf}}</td>
+                <td>{{cliente.telefone}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" @click="editClient(cliente)">
+                    Editar
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <footer class="toolbar toolbar-footer">
+      <h1 class="title">Desenvolvido por Roberto Pinheiro</h1>
+    </footer>
+  </div>
+  <!--PARA APARECER A JANELA DESTACADA-->
+  <div id="modal_cliente" v-if="openModal">
+    <div class="wrap">
+      <!--MODELO DE FORMULARIO CLIENTE-->
+      <form id='formsCadastroCliente' action="" class="pane-body">
+        <h3 v-if="mode === 'cadastro'">
+          Cadastro de Cliente
+        </h3>
+        <h3 v-if="mode === 'edicao'">
+          Edição de Cliente
+        </h3>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Nome" id="inputName" v-model="list_clients.client.nome" />
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="CPF" id="inputCPF" v-model="list_clients.client.cpf" />
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Telefone" id="inputTelefone" v-model="list_clients.client.telefone"
+          />
+        </div>
+        <button type="button" class="btn btn-large btn-negative" id="btnCancelar" @click="modal_1.openModal = false">Cancelar</button>
+        <button type="button" class="btn btn-large btn-positive" id="btnSalvar" @click="clientStoreOrUpdate()">Salvar</button>
+      </form>
+    </div>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+  var read = require('read-file-utf8')
+  var loki = require('lokijs');
+  var db = new loki('db.json');
+  var data = read(__dirname + '/db.json');
+  db.loadJSON(data);
+  window.vue = require('vue');
+  // db.loadJSON()
+  var clientes = db.getCollection('clientes');
+  console.log(db);
+
+  //CONTROLA BOTÕES NO HEAD
+  var btnGroup = new Vue({
+    el: '#groupBtn',
+    data: {
+    },
+    methods: {
+      //CADASTRAR CLIENTE
+      createClient: function () {
+        modal_1.mode = 'cadastro';
+        modal_1.openModal = true;
+        //LIMPAR OS DADOS DO IMPUTS
+        list_clients.client = {
+          nome: '',
+          cpf: '',
+          telefone: ''
+        }
+      }
+    }
+  })
+  //CONTROLA MODAL
+  var modal_1 = new Vue({
+    el: '#modal_cliente',
+    data: {
+      openModal: false,
+      mode: ''
+    },
+    methods: {
+      clientStoreOrUpdate: function () {
+        if (typeof list_clients.client.$loki != 'undefinede') {
+          clientes.update(list_clients.client);
+          alert('Alterado!');
+        } else {
+          clientes.insert(list_clients.client);
+          alert('Salvo!');
+        }
+        db.save();
+        this.openModal = false;
+      }
+    }
+  })
+  //CONTROLA A LISTA DE USUÁRIOS
+  var list_clients = new Vue({
+    el: 'tbody',
+    data: {
+      clientes: [],
+      client: {
+        nome: '',
+        cpf: '',
+        telefone: ''
+      }
+    },
+    mounted: function () {
+      this.clientes = clientes.data;
+      console.log(this.clientes);
+    },
+    methods: {
+      //EDITAR CLIENTE
+      editClient: function (client) {
+        //alert('TESTE');
+        modal_1.mode = 'edicao';
+        modal_1.openModal = true;
+        this.client = client;
+      }
+    }
+  })
+</script>
+
 </html>
