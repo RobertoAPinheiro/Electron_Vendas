@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Produtos</title>
+    <title>Controle de Vendas</title>
     <link rel="stylesheet" href="css/photon.css" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -152,7 +152,7 @@
         },
         methods: {
             productStoreOrUpdate: function () {
-                if (typeof list_product.product.$loki != 'undefinede') {
+                if (typeof list_product.product.$loki != 'undefined') {
                     produtos.update(list_product.product);
                     alert('Alterado!');
                 } else {

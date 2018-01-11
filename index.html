@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <title>Controle de vendas</title>
-  <meta charset="utf-8" />
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/photon.css" />
-  <link rel="stylesheet" href="css/style.css" />
+  <head>
+    <meta charset="UTF-8">
+    <title>Controle de Vendas</title>
+    <link rel="stylesheet" href="css/photon.css" />
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
@@ -80,33 +79,34 @@
       <h1 class="title">Desenvolvido por Roberto Pinheiro</h1>
     </footer>
   </div>
-  <!--PARA APARECER A JANELA DESTACADA-->
-  <div id="modal_cliente" v-if="openModal" class="wrap">
-    <div class="wrap">
-      <!--MODELO DE FORMULARIO CLIENTE-->
-      <form id='formsCadastroCliente' action="" class="pane-body">
-        <h3 v-if="mode === 'cadastro'">
-          Cadastro de Cliente
-        </h3>
-        <h3 v-if="mode === 'edicao'">
-          Edição de Cliente
-        </h3>
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Nome" id="inputName" v-model="list_clients.client.nome" />
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="CPF" id="inputCPF" v-model="list_clients.client.cpf" />
-        </div>
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Telefone" id="inputTelefone" v-model="list_clients.client.telefone"
-          />
-        </div>
-        <button type="button" class="btn btn-large btn-negative" id="btnCancelar" @click="modal_1.openModal = false">Cancelar</button>
-        <button type="button" class="btn btn-large btn-positive" id="btnSalvar" @click="clientStoreOrUpdate()">Salvar</button>
-      </form>
-    </div>
+    <!--PARA APARECER A JANELA DESTACADA-->
+    <div id="modal_cliente" v-if="openModal">
+      <div class="wrap">
+          <!--MODELO DE FORMULARIO PRODUTO-->
+          <form id='formsCadastroCliente' action="" class="pane-body">
+              <h3 v-if="mode === 'cadastro'">
+                  Cadastro de Cliente
+              </h3>
+              <h3 v-if="mode === 'edicao'">   
+                  Edição de Cliente
+              </h3>
+              <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Nome" id="inputName" v-model="list_clients.client.nome" />
+              </div>
+              <div class="form-group">
+                  <input type="text" class="form-control" placeholder="CPF" id="inputCPF" v-model="list_clients.client.cpf" />
+              </div>
+              <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Telefone" id="inputTelefone" v-model="list_clients.client.telefone"
+                  />
+              </div>
+              <button type="button" class="btn btn-large btn-negative" id="btnCancelar" @click="modal_1.openModal = false">Cancelar</button>
+              <button type="button" class="btn btn-large btn-positive" id="btnSalvar" @click="clientStoreOrUpdate()">Salvar</button>
+          </form>
+      </div>
   </div>
 </body>
+
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script>
   var read = require('read-file-utf8')
