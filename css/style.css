@@ -44,3 +44,25 @@
 #modal_produto input{
     color:  rgb(0, 0, 0);
 }
+
+#modal_venda{
+    position: fixed;
+    width: 100%;
+    min-height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: rgb(255, 255, 255);
+    z-index: 9000;
+}
+#modal_venda .wrap{
+    width: 60%;
+    height: 50%;
+    margin-left: 20%;
+    margin-top: 10%;
+    background: rgba(165, 165, 165, 0.7);
+    border-radius: 3%;
+}
+#modal_venda select, input{
+    color:  rgb(0, 0, 0);
+}

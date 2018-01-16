@@ -6,6 +6,7 @@
     <title>Controle de Vendas</title>
     <link rel="stylesheet" href="css/photon.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -14,31 +15,23 @@
             <h1 class="title">Loja XYZ</h1>
             <div class="toolbar-actions" id="groupBtn">
                 <div class="btn-group">
-                    <button class="btn btn-default">
-                        <span class="icon icon-home"></span>
-                    </button>
-                    <button class="btn btn-default">
-                        <span class="icon icon-folder"></span>
-                    </button>
-                    <button class="btn btn-default active">
-                        <span class="icon icon-cloud"></span>
-                    </button>
-                    <button class="btn btn-default">
-                        <span class="icon icon-popup"></span>
-                    </button>
-                    <button class="btn btn-default">
-                        <span class="icon icon-shuffle"></span>
-                    </button>
+                    <a class="btn btn-default" href="index.html">
+                        <span class="fa fa-address-book"></span>
+                        Clientes
+                    </a>
+                    <a class="btn btn-default active" href="produtos.html">
+                        produtos
+                        <span class="icon icon-dropbox icon-text"></span>
+                    </a>
+                    <a class="btn btn-default" href="vendas.html">
+                        <span class="fa fa-shopping-basket"></span>
+                        Vendas
+                    </a>
                 </div>
 
-                <a class="btn btn-default" href="index.html">
-                    Clientes
-                    <span class="icon icon-user icon-text"></span>
-                </a>
-
                 <button class="btn btn-default btn-default" @click="createProduct()" style="position: absolute;right:0">
+                    <span class="fa fa-plus-circle"></span>
                     Cadastrar Produto
-                    <span class="icon icon-plus icon-text"></span>
                 </button>
             </div>
         </header>
@@ -67,7 +60,7 @@
                                 <td>{{produto.preco}}</td>
                                 <td>{{produto.qtd}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary" @click="editProduto(produto)">
+                                    <button type="button" class="btn btn-primary" @click="editProduct(produto)">
                                         Editar
                                     </button>
                                 </td>
@@ -89,7 +82,7 @@
                 <h3 v-if="mode === 'cadastro'">
                     Cadastro de Produto
                 </h3>
-                <h3 v-if="mode === 'edicao'">   
+                <h3 v-if="mode === 'edicao'">
                     Edição de Produto
                 </h3>
                 <div class="form-group">
@@ -102,8 +95,7 @@
                     <input type="text" class="form-control" placeholder="Preço" id="inputPreco" v-model="list_product.product.preco" />
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Quantidade" id="inputQtd" v-model="list_product.product.qtd"
-                    />
+                    <input type="text" class="form-control" placeholder="Quantidade" id="inputQtd" v-model="list_product.product.qtd" />
                 </div>
                 <button type="button" class="btn btn-large btn-negative" id="btnCancelar" @click="modal_2.openModal = false">Cancelar</button>
                 <button type="button" class="btn btn-large btn-positive" id="btnSalvar" @click="productStoreOrUpdate()">Salvar</button>
@@ -179,10 +171,10 @@
         mounted: function () {
             this.produtos = produtos.data;
             console.log(this.produtos);
-        },  
+        },
         methods: {
             //EDITAR PRODUTO
-            editProduto: function (product) {
+            editProduct: function (product) {
                 //alert('TESTE');
                 modal_2.mode = 'edicao';
                 modal_2.openModal = true;

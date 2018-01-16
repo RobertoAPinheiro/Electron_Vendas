@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="UTF-8">
-    <title>Controle de Vendas</title>
-    <link rel="stylesheet" href="css/photon.css" />
-    <link rel="stylesheet" href="css/style.css" />
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Vendas</title>
+  <link rel="stylesheet" href="css/photon.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -14,31 +15,23 @@
       <h1 class="title">Loja XYZ</h1>
       <div class="toolbar-actions" id="groupBtn">
         <div class="btn-group">
-          <button class="btn btn-default">
-            <span class="icon icon-home"></span>
-          </button>
-          <button class="btn btn-default">
-            <span class="icon icon-folder"></span>
-          </button>
-          <button class="btn btn-default active">
-            <span class="icon icon-cloud"></span>
-          </button>
-          <button class="btn btn-default">
-            <span class="icon icon-popup"></span>
-          </button>
-          <button class="btn btn-default">
-            <span class="icon icon-shuffle"></span>
-          </button>
+          <a class="btn btn-default active" href="index.html">
+            <span class="fa fa-address-book"></span>
+            Clientes
+          </a>
+          <a class="btn btn-default" href="produtos.html">
+            produtos
+            <span class="icon icon-dropbox icon-text"></span>
+          </a>
+          <a class="btn btn-default" href="vendas.html">
+            <span class="fa fa-shopping-basket"></span>
+            Vendas
+          </a>
         </div>
 
-        <a class="btn btn-default" href="produtos.html">
-          Produtos
-          <span class="icon icon-dropbox icon-text"></span>
-        </a>
-
         <button class="btn btn-default btn-default" @click="createClient()" style="position: absolute;right:0">
+          <span class="fa fa-user-plus"></span>
           Cadastrar Cliente
-          <span class="icon icon-user icon-text"></span>
         </button>
       </div>
     </header>
@@ -79,43 +72,63 @@
       <h1 class="title">Desenvolvido por Roberto Pinheiro</h1>
     </footer>
   </div>
-    <!--PARA APARECER A JANELA DESTACADA-->
-    <div id="modal_cliente" v-if="openModal">
-      <div class="wrap">
-          <!--MODELO DE FORMULARIO PRODUTO-->
-          <form id='formsCadastroCliente' action="" class="pane-body">
-              <h3 v-if="mode === 'cadastro'">
-                  Cadastro de Cliente
-              </h3>
-              <h3 v-if="mode === 'edicao'">   
-                  Edição de Cliente
-              </h3>
-              <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Nome" id="inputName" v-model="list_clients.client.nome" />
-              </div>
-              <div class="form-group">
-                  <input type="text" class="form-control" placeholder="CPF" id="inputCPF" v-model="list_clients.client.cpf" />
-              </div>
-              <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Telefone" id="inputTelefone" v-model="list_clients.client.telefone"
-                  />
-              </div>
-              <button type="button" class="btn btn-large btn-negative" id="btnCancelar" @click="modal_1.openModal = false">Cancelar</button>
-              <button type="button" class="btn btn-large btn-positive" id="btnSalvar" @click="clientStoreOrUpdate()">Salvar</button>
-          </form>
-      </div>
+  <!--PARA APARECER A JANELA DESTACADA-->
+  <div id="modal_cliente" v-if="openModal">
+    <div class="wrap">
+      <!--MODELO DE FORMULARIO PRODUTO-->
+      <form id='formsCadastroCliente' action="" class="pane-body">
+        <h3 v-if="mode === 'cadastro'">
+          Cadastro de Cliente
+        </h3>
+        <h3 v-if="mode === 'edicao'">
+          Edição de Cliente
+        </h3>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Nome" id="inputName" v-model="list_clients.client.nome" />
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="CPF" id="inputCPF" v-model="list_clients.client.cpf" />
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Telefone" id="inputTelefone" v-model="list_clients.client.telefone"
+          />
+        </div>
+        <button type="button" class="btn btn-large btn-negative" id="btnCancelar" @click="modal_1.openModal = false">Cancelar</button>
+        <button type="button" class="btn btn-large btn-positive" id="btnSalvar" @click="clientStoreOrUpdate()">Salvar</button>
+      </form>
+    </div>
   </div>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script>
   var read = require('read-file-utf8')
+  const {app, BrowserWindow} = require('electron');
   var loki = require('lokijs');
   var db = new loki('db.json');
-  var data = read(__dirname + '/db.json');
-  db.loadJSON(data);
+  var fileExists = require('file-exists');
+  var data = {};
+//   fileExists(__dirname + '/db.json').then(exists => {
+//   console.log(exists) // OUTPUTS: true or false
+// })
+
+
+  if (fileExists(__dirname + '/db.json').then === true) {
+    console.log('EXISTE');
+    data = read(__dirname + '/db.json');
+    db.loadJSON(data);
+  } else {
+    console.log('entrou');
+    db.addCollection('vendas');
+    db.addCollection('clientes');
+    db.addCollection('produtos');
+    db.save();
+  }
+
+
   window.vue = require('vue');
   // db.loadJSON()
+
   var clientes = db.getCollection('clientes');
   console.log(db);
 
@@ -147,12 +160,13 @@
     },
     methods: {
       clientStoreOrUpdate: function () {
-        if (typeof list_clients.client.$loki != 'undefinede') {
+        if (typeof list_clients.client.$loki != 'undefined') {
           clientes.update(list_clients.client);
           alert('Alterado!');
         } else {
           clientes.insert(list_clients.client);
           alert('Salvo!');
+          db.save()
         }
         db.save();
         this.openModal = false;
