@@ -102,35 +102,40 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script>
+
   var read = require('read-file-utf8')
-  const {app, BrowserWindow} = require('electron');
   var loki = require('lokijs');
   var db = new loki('db.json');
   var fileExists = require('file-exists');
   var data = {};
-//   fileExists(__dirname + '/db.json').then(exists => {
-//   console.log(exists) // OUTPUTS: true or false
-// })
-
-
-  if (fileExists(__dirname + '/db.json').then === true) {
-    console.log('EXISTE');
-    data = read(__dirname + '/db.json');
-    db.loadJSON(data);
-  } else {
-    console.log('entrou');
-    db.addCollection('vendas');
-    db.addCollection('clientes');
-    db.addCollection('produtos');
-    db.save();
-  }
-
 
   window.vue = require('vue');
-  // db.loadJSON()
+
+  fileExists(__dirname + '/db.json').then(exists => {
+    console.log(exists); // OUTPUTS: true or false
+    ifExistsFile(exists);
+  })
+
+  function ifExistsFile(exists) {
+    if (exists === true) {
+      console.log('EXISTE');
+    } else {
+      console.log('NÃO EXISTE');
+      db.addCollection('vendas');
+      db.addCollection('clientes');
+      db.addCollection('produtos');
+      db.save(function () {
+        const remote = require('electron').remote;
+        remote.app.relaunch();
+        remote.app.exit(0);
+      });
+    }
+  }
+  data = read(__dirname + '/db.json');
+  db.loadJSON(data);
 
   var clientes = db.getCollection('clientes');
-  console.log(db);
+  console.log(clientes);
 
   //CONTROLA BOTÕES NO HEAD
   var btnGroup = new Vue({
@@ -166,7 +171,6 @@
         } else {
           clientes.insert(list_clients.client);
           alert('Salvo!');
-          db.save()
         }
         db.save();
         this.openModal = false;
@@ -186,7 +190,6 @@
     },
     mounted: function () {
       this.clientes = clientes.data;
-      console.log(this.clientes);
     },
     methods: {
       //EDITAR CLIENTE
