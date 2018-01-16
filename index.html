@@ -11,45 +11,45 @@
 
 <body>
   <div class="window">
-    <header class="toolbar toolbar-header">
-      <h1 class="title">Loja XYZ</h1>
+    <header class="toolbar toolbar-header"  id="backgroundToolbar">
+      <h1 class="title" id="title">Loja XYZ</h1>
       <div class="toolbar-actions" id="groupBtn">
-        <div class="btn-group">
-          <a class="btn btn-default active" href="index.html">
+        <div class="btn-group" id="backgroundBtnGoup">
+          <a class="btn btn-default active" href="index.html" id="btnTAB">
             <span class="fa fa-address-book"></span>
             Clientes
           </a>
-          <a class="btn btn-default" href="produtos.html">
+          <a class="btn btn-default" href="produtos.html" id="btnTAB">
             produtos
             <span class="icon icon-dropbox icon-text"></span>
           </a>
-          <a class="btn btn-default" href="vendas.html">
+          <a class="btn btn-default" href="vendas.html" id="btnTAB">
             <span class="fa fa-shopping-basket"></span>
             Vendas
           </a>
         </div>
 
-        <button class="btn btn-default btn-default" @click="createClient()" style="position: absolute;right:0">
+        <button class="btn btn-default btn-default" @click="createClient()" style="position: absolute;right:0" id="btnAction">
           <span class="fa fa-user-plus"></span>
           Cadastrar Cliente
         </button>
       </div>
     </header>
-    <div class="window-content">
-      <div class="pane-group">
-        <div class="pane-sm sidebar">
+    <div class="window-content" id="backgroundWindowsContent">
+      <div class="pane-group" id="backgroundPaneGroup">
+        <div class="pane-sm sidebar" id="backgroundSideBar">
           <p>Fez exprimindo recordarei dei has inventario dez necessitas. Desdemnao caminhava desgostei ha ja. Afoito chapeo
             diz teu aturar ameaca. Sao acompanhar com reproduzir declamacao obtemperou bem vivissimos tao. Ao joao vejo maco
             va haja faca um. Da tu as eivado pensou vereda.</p>
         </div>
-        <div class="pane">
-          <table class="table table-striped">
+        <div class="pane" id="backgroundPane">
+          <table class="table table-striped" id="backgroundLightColor">
             <thead>
-              <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Telefone</th>
-                <th></th>
+              <tr id="backgroundTR">
+                <th id="backgroundTR">Nome</th>
+                <th id="backgroundTR">CPF</th>
+                <th id="backgroundTR">Telefone</th>
+                <th id="backgroundTR"></th>
               </tr>
             </thead>
             <tbody>
@@ -68,8 +68,8 @@
         </div>
       </div>
     </div>
-    <footer class="toolbar toolbar-footer">
-      <h1 class="title">Desenvolvido por Roberto Pinheiro</h1>
+    <footer class="toolbar toolbar-footer" id="footer">
+      <h1 id="footer" class="title">Desenvolvido por Roberto Pinheiro</h1>
     </footer>
   </div>
   <!--PARA APARECER A JANELA DESTACADA-->
@@ -103,6 +103,27 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script>
 
+  // app.on('ready', () => {
+  //   // create main browser window
+  //   mainWindow = new BrowserWindow({
+  //     titleBarStyle: 'hidden',
+  //     width: 1920,
+  //     height: 1080,
+  //     show: false // don't show the main window
+  //   });
+  //   // create a new `splash`-Window 
+  //   splash = new BrowserWindow({ width: 810, height: 610, transparent: true, frame: false, alwaysOnTop: true });
+  //   splash.loadURL(`file://${__dirname}/splash.html`);
+  //   mainWindow.loadURL(`file://${__dirname}/index.html`);
+
+  //   // if main window is ready to show, then destroy the splash window and show up the main window
+  //   mainWindow.once('ready-to-show', () => {
+  //     splash.destroy();
+  //     mainWindow.show();
+  //   });
+  // });
+
+
   var read = require('read-file-utf8')
   var loki = require('lokijs');
   var db = new loki('db.json');
@@ -112,15 +133,12 @@
   window.vue = require('vue');
 
   fileExists(__dirname + '/db.json').then(exists => {
-    console.log(exists); // OUTPUTS: true or false
     ifExistsFile(exists);
   })
 
   function ifExistsFile(exists) {
     if (exists === true) {
-      console.log('EXISTE');
     } else {
-      console.log('NÃO EXISTE');
       db.addCollection('vendas');
       db.addCollection('clientes');
       db.addCollection('produtos');
@@ -135,7 +153,6 @@
   db.loadJSON(data);
 
   var clientes = db.getCollection('clientes');
-  console.log(clientes);
 
   //CONTROLA BOTÕES NO HEAD
   var btnGroup = new Vue({

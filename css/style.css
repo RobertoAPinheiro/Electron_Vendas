@@ -1,3 +1,50 @@
+#groupBtn{
+    background: #165C9B;
+}
+#backgroundToolbar, #groupBtn, #backgroundBtnGoup{
+    background: #165C9B;
+    border-color: #165C9B;
+}
+#backgroundTR{
+    background: rgb(139, 188, 245);
+    border-color: rgb(124, 40, 1);
+    color: rgb(124, 40, 1);
+    font-size: 13px;
+    text-align: center;
+}
+#backgroundSideBar{
+    background: rgb(139, 188, 245);
+    border-color: rgb(139, 188, 245);
+    color: rgb(124, 40, 1);
+}
+#backgroundWindowsContent, #backgroundPaneGroup{
+    background: rgb(202, 227, 255);
+    border-color: rgb(202, 227, 255);
+    
+}
+#btnTAB{
+    background-color: #FF9B6E;
+    border-color: #FF9B6E;
+    color: #000000;
+}
+#btnAction{
+    background: rgb(252, 212, 193);
+    border-color: #FF9B6E;
+    color: #000000;
+}
+#title, #footer{
+    background: #165C9B;
+    border-color: #165C9B;
+    color: #FF9B6E;
+}
+#splashScreen{
+    position: fixed;
+    width: 100%;
+    min-height: 100%;
+    left: 0;
+    top: 0;
+    transform: translateX(-50%) translateY(-50%);
+}
 .pane-body{
     padding: 1rem
 }
@@ -8,7 +55,7 @@
     left: 0;
     top: 0;
     background: rgba(0, 0, 0, 0.7);
-    color: rgb(255, 255, 255);
+    color: rgb(249, 125, 69);
     z-index: 9000;
 }
 #modal_cliente .wrap{
@@ -16,11 +63,11 @@
     height: 50%;
     margin-left: 20%;
     margin-top: 10%;
-    background: rgba(165, 165, 165, 0.7);
+    background: rgba(87, 138, 183, 0.699);
     border-radius: 3%;
 }
 #modal_cliente input{
-    color:  rgb(0, 0, 0);
+    color:  #165C9B;
 }
 
 #modal_produto{
@@ -30,7 +77,7 @@
     left: 0;
     top: 0;
     background: rgba(0, 0, 0, 0.7);
-    color: rgb(255, 255, 255);
+    color: rgb(249, 125, 69);
     z-index: 9000;
 }
 #modal_produto .wrap{
@@ -38,11 +85,11 @@
     height: 50%;
     margin-left: 20%;
     margin-top: 10%;
-    background: rgba(165, 165, 165, 0.7);
+    background: rgba(87, 138, 183, 0.699);
     border-radius: 3%;
 }
 #modal_produto input{
-    color:  rgb(0, 0, 0);
+    color:  #165C9B;
 }
 
 #modal_venda{
@@ -52,7 +99,7 @@
     left: 0;
     top: 0;
     background: rgba(0, 0, 0, 0.7);
-    color: rgb(255, 255, 255);
+    color: rgb(249, 125, 69);
     z-index: 9000;
 }
 #modal_venda .wrap{
@@ -60,9 +107,9 @@
     height: 50%;
     margin-left: 20%;
     margin-top: 10%;
-    background: rgba(165, 165, 165, 0.7);
+    background: rgba(87, 138, 183, 0.699);
     border-radius: 3%;
 }
 #modal_venda select, input{
-    color:  rgb(0, 0, 0);
+    color:  #165C9B;
 }

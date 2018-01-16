@@ -11,47 +11,47 @@
 
 <body>
     <div class="window">
-        <header class="toolbar toolbar-header">
-            <h1 class="title">Loja XYZ</h1>
+        <header class="toolbar toolbar-header" id="backgroundToolbar">
+            <h1 class="title" id="title">Loja XYZ</h1>
             <div class="toolbar-actions" id="groupBtn">
-                <div class="btn-group">
-                    <a class="btn btn-default" href="index.html">
+                <div class="btn-group" id="backgroundBtnGoup">
+                    <a class="btn btn-default" href="index.html" id="btnTAB">
                         <span class="fa fa-address-book"></span>
                         Clientes
                     </a>
-                    <a class="btn btn-default" href="produtos.html">
+                    <a class="btn btn-default" href="produtos.html" id="btnTAB">
                         produtos
                         <span class="icon icon-dropbox icon-text"></span>
                     </a>
-                    <a class="btn btn-default active" href="vendas.html">
+                    <a class="btn btn-default active" href="vendas.html" id="btnTAB">
                         <span class="fa fa-shopping-basket"></span>
                         Vendas
                     </a>
                 </div>
 
-                <button class="btn btn-default btn-default" @click="createSale()" style="position: absolute;right:0">
+                <button class="btn btn-default btn-default" @click="createSale()" style="position: absolute;right:0" id="btnAction">
                     <span class="fa fa-cart-plus"></span>
                     Cadastrar Venda
                 </button>
             </div>
         </header>
-        <div class="window-content">
-            <div class="pane-group">
-                <div class="pane-sm sidebar">
+        <div class="window-content" id="backgroundWindowsContent">
+            <div class="pane-group" id="backgroundPaneGroup">
+                <div class="pane-sm sidebar" id="backgroundSideBar">
                     <p>Fez exprimindo recordarei dei has inventario dez necessitas. Desdemnao caminhava desgostei ha ja. Afoito
                         chapeo diz teu aturar ameaca. Sao acompanhar com reproduzir declamacao obtemperou bem vivissimos
                         tao. Ao joao vejo maco va haja faca um. Da tu as eivado pensou vereda.</p>
                 </div>
-                <div class="pane">
-                    <table class="table table-striped">
+                <div class="pane" id="backgroundPane">
+                    <table class="table table-striped" id="backgroundLightColor">
                         <thead>
-                            <tr>
-                                <th>Cliente</th>
-                                <th>Produto</th>
-                                <th>Preço Unit.</th>
-                                <th>Qtd</th>
-                                <th>Total</th>
-                                <th></th>
+                            <tr id="backgroundTR">
+                                <th id="backgroundTR">Cliente</th>
+                                <th id="backgroundTR">Produto</th>
+                                <th id="backgroundTR">Preço Unit.</th>
+                                <th id="backgroundTR">Qtd</th>
+                                <th id="backgroundTR">Total</th>
+                                <th id="backgroundTR"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -72,8 +72,8 @@
                 </div>
             </div>
         </div>
-        <footer class="toolbar toolbar-footer">
-            <h1 class="title">Desenvolvido por Roberto Pinheiro</h1>
+        <footer class="toolbar toolbar-footer" id="footer">
+            <h1 class="title" id="footer">Desenvolvido por Roberto Pinheiro</h1>
         </footer>
     </div>
     <!--PARA APARECER A JANELA DESTACADA-->
@@ -162,14 +162,13 @@
             this.clientes = clientes.data;
             this.produtos = produtos.data;
             this.vendas = vendas.data;
-            // console.log(this.vendas);
         },
         methods: {
             saleStoreOrUpdae: function () {
                 if (typeof list_sale.sale.$loki != 'undefined') {
                     var select_prod = document.getElementById("prod_name");
                     var prod_name = select_prod.options[select_prod.selectedIndex].text;
-                    // console.log(produtos.find({nome:prod_name})[0].preco);
+
                     list_sale.sale.produto = produtos.find({ nome: prod_name })[0].nome;
                     vendas.update(list_sale.sale);
                     alert('Alterado!');
@@ -178,7 +177,7 @@
                     var select_client = document.getElementById("client_name");
                     var prod_name = select_prod.options[select_prod.selectedIndex].text;
                     var client_name = select_client.options[select_client.selectedIndex].text;
-                    // console.log(produtos.find({nome:prod_name})[0].preco);
+
                     list_sale.sale.cliente = clientes.find({ nome: client_name })[0].nome;
                     list_sale.sale.produto = produtos.find({ nome: prod_name })[0].nome;
                     list_sale.sale.preco = produtos.find({ nome: prod_name })[0].preco;

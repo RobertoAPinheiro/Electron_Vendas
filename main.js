@@ -10,20 +10,43 @@ const url = require('url')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let splash
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
-
-  // and load the index.html of the app.
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    show: true,
+    titleBarStyle: 'hidden',
+    flashFrame: false, //I TRIED THIS
+    icon: __dirname + '/images/logo.ico'
+  })
+  // mainWindow.flashFrame(false) //I TRIED THIS
+  // // create a new `splash`-Window 
+  // splash = new BrowserWindow({
+  //   width: 800,
+  //   frame: false,
+  //   height: 600,
+  //   icon: __dirname + '/images/logo.ico'
+  // })
+  // splash.loadURL(`file://${__dirname}/splash.html`);
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true
   }))
 
+  // after 3 seconds, destroy the splash window and show up the main window
+  // var myVar = setInterval(dentroyWindows, 3000)
+
+  // function dentroyWindows() {
+  //   splash.destroy()
+  //   mainWindow.show()
+  // }
+
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+   mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -55,6 +78,12 @@ app.on('activate', function () {
     createWindow()
   }
 })
+
+app.on('browser-window-created', function (e, window) {
+  window.setMenu(null);
+  window.flashFrame(false); //I TRIED THIS
+});
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
