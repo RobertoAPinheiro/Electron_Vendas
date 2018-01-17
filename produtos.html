@@ -17,30 +17,30 @@
                 <div class="btn-group" id="backgroundBtnGoup">
                     <a class="btn btn-default" href="index.html" id="btnTAB">
                         <span class="fa fa-address-book"></span>
-                        Clientes
+                        CLIENTES
                     </a>
                     <a class="btn btn-default active" href="produtos.html" id="btnTAB">
-                        produtos
-                        <span class="icon icon-dropbox icon-text"></span>
+                        <span class="fa fa-shopping-bag"></span>
+                        PRODUTOS
                     </a>
                     <a class="btn btn-default" href="vendas.html" id="btnTAB">
                         <span class="fa fa-shopping-basket"></span>
-                        Vendas
+                        VENDAS
                     </a>
                 </div>
 
                 <button class="btn btn-default btn-default" @click="createProduct()" style="position: absolute;right:0" id="btnAction">
-                    <span class="fa fa-plus-circle"></span>
-                    Cadastrar Produto
+                    <span class="fa fa-tag"></span>
+                    CADASTRAR PRODUTO
                 </button>
             </div>
         </header>
         <div class="window-content" id="backgroundWindowsContent">
             <div class="pane-group" id="backgroundPaneGroup">
                 <div class="pane-sm sidebar" id="backgroundSideBar">
-                    <p>Fez exprimindo recordarei dei has inventario dez necessitas. Desdemnao caminhava desgostei ha ja. Afoito
-                        chapeo diz teu aturar ameaca. Sao acompanhar com reproduzir declamacao obtemperou bem vivissimos
-                        tao. Ao joao vejo maco va haja faca um. Da tu as eivado pensou vereda.</p>
+                    <p>Nesta tela, é possiveli cadastrar um novo produto, consultar os que já estão cadastrados e alterar os
+                        mesmos.
+                    </p>
                 </div>
                 <div class="pane" id="backgroundPane">
                     <table class="table table-striped" id="backgroundLightColor">
@@ -60,7 +60,7 @@
                                 <td>{{produto.preco}}</td>
                                 <td>{{produto.qtd}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary" @click="editProduct(produto)">
+                                    <button type="button" class="btn btn-primary" @click="editProduct(produto)" id="backgroundListButton">
                                         Editar
                                     </button>
                                 </td>

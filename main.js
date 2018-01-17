@@ -17,20 +17,20 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    show: true,
+    show: false,
     titleBarStyle: 'hidden',
     flashFrame: false, //I TRIED THIS
     icon: __dirname + '/images/logo.ico'
   })
-  // mainWindow.flashFrame(false) //I TRIED THIS
-  // // create a new `splash`-Window 
-  // splash = new BrowserWindow({
-  //   width: 800,
-  //   frame: false,
-  //   height: 600,
-  //   icon: __dirname + '/images/logo.ico'
-  // })
-  // splash.loadURL(`file://${__dirname}/splash.html`);
+  mainWindow.flashFrame(false) //I TRIED THIS
+  // create a new `splash`-Window 
+  splash = new BrowserWindow({
+    width: 800,
+    frame: false,
+    height: 600,
+    icon: __dirname + '/images/logo.ico'
+  })
+  splash.loadURL(`file://${__dirname}/splash.html`);
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
@@ -38,15 +38,15 @@ function createWindow() {
   }))
 
   // after 3 seconds, destroy the splash window and show up the main window
-  // var myVar = setInterval(dentroyWindows, 3000)
+  var myVar = setInterval(dentroyWindows, 3000)
 
-  // function dentroyWindows() {
-  //   splash.destroy()
-  //   mainWindow.show()
-  // }
+  function dentroyWindows() {
+    splash.destroy()
+    mainWindow.show()
+  }
 
   // Open the DevTools.
-   mainWindow.webContents.openDevTools()
+  //  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
