@@ -38,9 +38,9 @@
     </header>
     <div class="window-content" id="backgroundWindowsContent">
       <div class="pane-group" id="backgroundPaneGroup">
-        <div class="pane-sm sidebar" id="backgroundSideBar">
+        <!-- <div class="pane-sm sidebar" id="backgroundSideBar">
           <p> Nesta tela, é possivel cadastrar um novo cliente, consultar os que já possui no cadastro e alterar os mesmos.</p>
-        </div>
+        </div> -->
         <div class="pane" id="backgroundPane">
           <table class="table table-striped" id="backgroundLightColor">
             <thead>
@@ -64,6 +64,11 @@
               </tr>
             </tbody>
           </table>
+          <div style="position: absolute;right:0;bottom:0">
+            <button onclick="infoClientsPage() " id="btnInfo"> 
+              <i class="fa fa-info-circle fa-2x"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -217,6 +222,10 @@
       }
     }
   })
+
+  function infoClientsPage() {
+    alert("Nesta tela, é possivel cadastrar um novo cliente, consultar os que já possui no cadastro e alterar os mesmos.");
+  }
 </script>
 
 </html>
