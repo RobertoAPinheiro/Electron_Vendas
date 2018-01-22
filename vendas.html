@@ -37,10 +37,6 @@
         </header>
         <div class="window-content" id="backgroundWindowsContent">
             <div class="pane-group" id="backgroundPaneGroup">
-                <!-- <div class="pane-sm sidebar" id="backgroundSideBar">
-                    <p>Nesta tela, é possivel cadastrar uma venda, consultar as vendas ja realizadas e alterar os dados MENOS
-                        o cliente que realizou a compra.</p>
-                </div> -->
                 <div class="pane" id="backgroundPane">
                     <table class="table table-striped" id="backgroundLightColor">
                         <thead>
@@ -128,7 +124,6 @@
     var data = read(__dirname + '/db.json');
     db.loadJSON(data);
     window.vue = require('vue');
-    // db.loadJSON()
     var vendas = db.getCollection('vendas');
     var clientes = db.getCollection('clientes');
     var produtos = db.getCollection('produtos');
@@ -211,8 +206,6 @@
         methods: {
             //EDITAR venda
             editSale: function (item) {
-
-                //alert('TESTE');
                 this.sale = item;
                 modal_3.mode = 'edicao';
                 modal_3.openModal = true;

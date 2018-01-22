@@ -37,11 +37,6 @@
         </header>
         <div class="window-content" id="backgroundWindowsContent">
             <div class="pane-group" id="backgroundPaneGroup">
-                <!-- <div class="pane-sm sidebar" id="backgroundSideBar">
-                    <p>Nesta tela, é possiveli cadastrar um novo produto, consultar os que já estão cadastrados e alterar os
-                        mesmos.
-                    </p>
-                </div> -->
                 <div class="pane" id="backgroundPane">
                     <table class="table table-striped" id="backgroundLightColor">
                         <thead>
@@ -116,7 +111,6 @@
     var data = read(__dirname + '/db.json');
     db.loadJSON(data);
     window.vue = require('vue');
-    // db.loadJSON()
     var produtos = db.getCollection('produtos');
 
     //CONTROLA BOTÕES NO HEAD
@@ -178,7 +172,6 @@
         methods: {
             //EDITAR PRODUTO
             editProduct: function (product) {
-                //alert('TESTE');
                 modal_2.mode = 'edicao';
                 modal_2.openModal = true;
                 this.product = product;
